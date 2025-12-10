@@ -34,7 +34,6 @@ endif()
 if(OQS_ENABLE_KEM_ml_kem_512_cuda)
     add_library(ml_kem_512_cuda OBJECT 
         cupqc_ml-kem-512_cuda/cupqc_ml-kem.cu
-        cupqc_ml-kem-512_cuda/your_function.cu  # 添加新文件
     )
     target_link_libraries(ml_kem_512_cuda cupqc)
     set_property(TARGET ml_kem_512_cuda PROPERTY CUDA_ARCHITECTURES OFF)
