@@ -18,7 +18,8 @@
 
 namespace atpqc_cuda::fips202_ws::device {
 
-__device__ extern const unsigned offset_constants[32];
+// Remove extern declaration to avoid redefinition error
+// __device__ extern const unsigned offset_constants[32];
 
 
 class keccak {

@@ -88,15 +88,12 @@ cleanup:
     if (d_sk != nullptr) cudaFree(d_sk);
     if (workspace != nullptr) destroy_workspace(workspace);
     if (randombytes != nullptr) release_entropy(randombytes);
-    if(!failure) printf("batch success!!!\n");
-    else printf("batch fail!!!\n");
     return failure ? -1 : 0;
 }
 
 // 从密钥存储中获取密钥对
 bool get_keypair_from_store(uint8_t *pk, uint8_t *sk) {
     if (store_empty.load()) {
-        printf("EMPTY\n");
         return false;
     }
     
@@ -104,7 +101,6 @@ bool get_keypair_from_store(uint8_t *pk, uint8_t *sk) {
     if (index >= BATCH_SIZE) {
         // 所有密钥都已使用，标记存储为空
         store_empty.store(true);
-        printf("EMPTY2\n");
         return false;
     }
     
@@ -253,46 +249,38 @@ extern "C" {
         if (!store_initialized.exchange(true)) {
             // 首次调用时预先生成一批密钥
             keypair_batch<KEM_512>(BATCH_SIZE);
-            printf("ML_KEM_512 keypair batch size: %d\n", BATCH_SIZE);
+            //printf("ML_KEM_512 keypair batch size: %d\n", BATCH_SIZE);
                         
             // 调用FPTRU-KEM的main_2函数进行测试
-            // main_2();
+            main_2();
         }
     }
     int cupqc_ml_kem_512_keypair(uint8_t *pk, uint8_t *sk) {
-        // printf("ML_KEM_512 keypair\n");
         
         // 初始化密钥存储（如果需要）
         initialize_store_if_needed();
         
         // 尝试从密钥存储中获取密钥对
         if (get_keypair_from_store(pk, sk)) {
-            printf("1\n");
             return 0; // 成功从存储中获取
         }
         
         // 如果存储中没有可用密钥，生成一批新密钥
         if (keypair_batch<KEM_512>(BATCH_SIZE) != 0) {
-            printf("2\n");
             return -1; // 批处理生成失败
         }
         
         // 再次尝试从存储中获取密钥对
         if (get_keypair_from_store(pk, sk)) {
-            printf("3\n");
             return 0; // 成功从新生成的批处理中获取
         }
-        
-         printf("4\n");
         // 如果仍然失败，回退到单次生成
         return keypair<KEM_512>(pk, sk);
     }
     int cupqc_ml_kem_512_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk) {
-        // printf("ML_KEM_512 encaps\n");
         return encaps<KEM_512>(ct, ss, pk);
     }
     int cupqc_ml_kem_512_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk) {
-        // printf("ML_KEM_512 decaps\n");
         return decaps<KEM_512>(ss, ct, sk);
     }
 #endif
