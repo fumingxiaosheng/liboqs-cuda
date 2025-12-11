@@ -133,6 +133,9 @@ cmake_dependent_option(OQS_ENABLE_KEM_ml_kem_512 "" ON "OQS_ENABLE_KEM_ML_KEM" O
 cmake_dependent_option(OQS_ENABLE_KEM_ml_kem_768 "" ON "OQS_ENABLE_KEM_ML_KEM" OFF)
 cmake_dependent_option(OQS_ENABLE_KEM_ml_kem_1024 "" ON "OQS_ENABLE_KEM_ML_KEM" OFF)
 
+option(OQS_ENABLE_KEM_FPTRU "Enable fptru algorithm family" ON)
+cmake_dependent_option(OQS_ENABLE_KEM_fptru_761 "" ON "OQS_ENABLE_KEM_FPTRU" OFF)
+
 option(OQS_ENABLE_SIG_DILITHIUM "Enable dilithium algorithm family" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_dilithium_2 "" ON "OQS_ENABLE_SIG_DILITHIUM" OFF)
 cmake_dependent_option(OQS_ENABLE_SIG_dilithium_3 "" ON "OQS_ENABLE_SIG_DILITHIUM" OFF)
@@ -408,6 +411,11 @@ if(OQS_USE_CUPQC)
 endif()
 endif()
 
+if(CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
+if(OQS_USE_CUPQC)
+    cmake_dependent_option(OQS_ENABLE_KEM_fptru_761_cuda "" ON "OQS_ENABLE_KEM_fptru_761" OFF)
+endif()
+endif()
 
 if(CMAKE_SYSTEM_NAME MATCHES "Darwin|Linux")
 if(OQS_DIST_X86_64_BUILD OR (OQS_USE_AVX2_INSTRUCTIONS AND OQS_USE_POPCNT_INSTRUCTIONS))

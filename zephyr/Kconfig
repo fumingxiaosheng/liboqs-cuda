@@ -45,6 +45,11 @@ config LIBOQS_ENABLE_KEM_ML_KEM
 	bool "Enable the ML-KEM algorithm (ML-KEM)"
 	default y
 	depends on LIBOQS
+	
+config LIBOQS_ENABLE_KEM_FPTRU
+	bool "Enable the FPTRU KEM algorithm"
+	default n
+	depends on LIBOQS
 
 config LIBOQS_ENABLE_SIG_DILITHIUM
 	bool "Enable the DILITHIUM signature algorithm (NIST Round 3)"

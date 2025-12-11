@@ -34,28 +34,28 @@ endif()
 if(OQS_ENABLE_KEM_ml_kem_512_cuda)
     add_library(ml_kem_512_cuda OBJECT 
         cupqc_ml-kem-512_cuda/cupqc_ml-kem.cu
-        cupqc_ml-kem-512_cuda/cleanversion/cbd.cu
-        cupqc_ml-kem-512_cuda/cleanversion/coding.cu
-        cupqc_ml-kem-512_cuda/cleanversion/kem.cu
-        cupqc_ml-kem-512_cuda/cleanversion/kernel.cu
-        cupqc_ml-kem-512_cuda/cleanversion/main.cu
-        cupqc_ml-kem-512_cuda/cleanversion/pack.cu
-        cupqc_ml-kem-512_cuda/cleanversion/poly.cu
-        cupqc_ml-kem-512_cuda/cleanversion/random.cu
-        cupqc_ml-kem-512_cuda/cleanversion/reduce.cu
-        cupqc_ml-kem-512_cuda/cleanversion/speed.cu
-        cupqc_ml-kem-512_cuda/cleanversion/tensor.cu
-        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n653q/n653.cu
-        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n761q/n761.cu
-        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n1277q/n1277.cu
-        cupqc_ml-kem-512_cuda/cleanversion/fips202_ws/device.cu
-        cupqc_ml-kem-512_cuda/cleanversion/fips202_ws/global.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/cbd.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/coding.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/kem.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/kernel.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/main.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/pack.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/poly.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/random.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/reduce.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/speed.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/tensor.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n653q/n653.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n761q/n761.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/poly_mul_n1277q/n1277.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/fips202_ws/device.cu
+#        cupqc_ml-kem-512_cuda/cleanversion/fips202_ws/global.cu
     )
     target_link_libraries(ml_kem_512_cuda cupqc)
     set_property(TARGET ml_kem_512_cuda PROPERTY CUDA_ARCHITECTURES OFF)
     target_compile_options(ml_kem_512_cuda PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-arch=compute_86>)
     target_include_directories(ml_kem_512_cuda PRIVATE ${CMAKE_CURRENT_LIST_DIR}/cupqc_ml-kem-512_cuda/cleanversion)
-    target_include_directories(ml_kem_512_cuda PRIVATE ${CMAKE_CURRENT_LIST_DIR}/cupqc_ml-kem-512_cuda/cleanversion/fips202_ws)
+    #target_include_directories(ml_kem_512_cuda PRIVATE ${CMAKE_CURRENT_LIST_DIR}/cupqc_ml-kem-512_cuda/cleanversion/fips202_ws)
     set(_ML_KEM_OBJS ${_ML_KEM_OBJS} $<TARGET_OBJECTS:ml_kem_512_cuda>)
 endif()
 

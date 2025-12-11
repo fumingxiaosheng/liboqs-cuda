@@ -16,7 +16,6 @@
 #include <oqs/oqsconfig.h>
 #include <atomic>
 #include <cstring>
-#include "cleanversion/main.h"
 
 using namespace cupqc;
 
@@ -252,7 +251,7 @@ extern "C" {
             //printf("ML_KEM_512 keypair batch size: %d\n", BATCH_SIZE);
                         
             // 调用FPTRU-KEM的main_2函数进行测试
-            main_2();
+            // main_2();
         }
     }
     int cupqc_ml_kem_512_keypair(uint8_t *pk, uint8_t *sk) {

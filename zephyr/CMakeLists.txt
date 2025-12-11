@@ -97,6 +97,12 @@ if(CONFIG_LIBOQS)
                 set(OQS_ENABLE_KEM_ML_KEM OFF)
         endif()
 
+        if(CONFIG_LIBOQS_ENABLE_KEM_FPTRU)
+                set(OQS_ENABLE_KEM_FPTRU ON)
+        else()
+                set(OQS_ENABLE_KEM_FPTRU OFF)
+        endif()
+
         if(CONFIG_LIBOQS_ENABLE_SIG_DILITHIUM)
                 set(OQS_ENABLE_SIG_DILITHIUM ON)
         else()

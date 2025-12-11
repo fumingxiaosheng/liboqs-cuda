@@ -91,11 +91,13 @@ extern "C" {
 #define OQS_KEM_alg_frodokem_1344_aes "FrodoKEM-1344-AES"
 /** Algorithm identifier for FrodoKEM-1344-SHAKE KEM. */
 #define OQS_KEM_alg_frodokem_1344_shake "FrodoKEM-1344-SHAKE"
+/** Algorithm identifier for FPTRU-761 KEM. */
+#define OQS_KEM_alg_fptru_761 "FPTRU-761"
 // EDIT-WHEN-ADDING-KEM
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALGS_LENGTH_START
 
 /** Number of algorithm identifiers above. */
-#define OQS_KEM_algs_length 29
+#define OQS_KEM_algs_length 30
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALGS_LENGTH_END
 
 /**
@@ -317,6 +319,9 @@ OQS_API void OQS_KEM_free(OQS_KEM *kem);
 #ifdef OQS_ENABLE_KEM_FRODOKEM
 #include <oqs/kem_frodokem.h>
 #endif /* OQS_ENABLE_KEM_FRODOKEM */
+#ifdef OQS_ENABLE_KEM_FPTRU
+#include <oqs/kem_fptru.h>
+#endif /* OQS_ENABLE_KEM_FPTRU */
 // EDIT-WHEN-ADDING-KEM
 
 #if defined(__cplusplus)

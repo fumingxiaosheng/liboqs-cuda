@@ -128,6 +128,10 @@
 #cmakedefine OQS_ENABLE_KEM_kyber_1024_avx2 1
 #cmakedefine OQS_ENABLE_KEM_kyber_1024_aarch64 1
 
+#cmakedefine OQS_ENABLE_KEM_FPTRU 1
+#cmakedefine OQS_ENABLE_KEM_fptru_761 1
+#cmakedefine OQS_ENABLE_KEM_fptru_761_cuda 1
+
 #cmakedefine OQS_ENABLE_KEM_ML_KEM 1
 #cmakedefine OQS_ENABLE_KEM_ml_kem_512 1
 #cmakedefine OQS_ENABLE_KEM_ml_kem_512_x86_64 1
