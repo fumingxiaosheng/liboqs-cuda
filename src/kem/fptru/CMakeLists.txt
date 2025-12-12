@@ -28,6 +28,7 @@ if(OQS_ENABLE_KEM_fptru_761_cuda)
         FPTRU/random.cu
         FPTRU/reduce.cu
         FPTRU/tensor.cu
+        FPTRU/main.cu
         FPTRU/fips202_ws/device.cu
         FPTRU/fips202_ws/global.cu
         FPTRU/poly_mul_n761q/n761.cu
@@ -36,7 +37,15 @@ if(OQS_ENABLE_KEM_fptru_761_cuda)
     )
     
     set_property(TARGET fptru_761_cuda PROPERTY CUDA_ARCHITECTURES OFF)
-    target_compile_options(fptru_761_cuda PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:-arch=compute_86>)
+    target_compile_options(fptru_761_cuda PRIVATE 
+        $<$<COMPILE_LANGUAGE:CUDA>:-std=c++17>
+        $<$<COMPILE_LANGUAGE:CUDA>:-arch=compute_86 -code=sm_86>
+        $<$<COMPILE_LANGUAGE:CUDA>:-rdc=true>
+        $<$<COMPILE_LANGUAGE:CUDA>:-lcuda -lnvToolsExt>
+        $<$<COMPILE_LANGUAGE:CUDA>:-prec-div=false>
+        $<$<COMPILE_LANGUAGE:CUDA>:-O3>
+    )
+    target_compile_definitions(fptru_761_cuda PRIVATE FPTRU_N=761 NEW=1)
     
     # 包含头文件目录
     target_include_directories(fptru_761_cuda PRIVATE

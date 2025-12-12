@@ -25,8 +25,8 @@ double crypto_kem_decaps_v3(unsigned char *k, const unsigned char *ct, const uns
 double crypto_kem_encaps_v4(unsigned char *ct, unsigned char *k, const unsigned char *pk,cudaStream_t stream);
 
 double fptru_keygen(unsigned char *array_pk,unsigned char *array_sk);
-
+double fptru_keygen_with_batchsize(unsigned char *array_pk,unsigned char *array_sk,int batch_size);
 void fptru_encaps(unsigned char *ct, unsigned char *k,  unsigned char *pk);
 
-void fptru_decaps(unsigned char *k,const unsigned char *ct,const unsigned char *sk, int *res,const unsigned char *k1);
+void fptru_decaps(unsigned char *k,const unsigned char *ct,const unsigned char *sk, int *res);
 #endif

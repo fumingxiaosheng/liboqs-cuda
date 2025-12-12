@@ -3,7 +3,7 @@
 
 #ifndef FPTRU_N
 
-#define FPTRU_N 1277
+#define FPTRU_N 761
 
 #endif
 
@@ -19,9 +19,9 @@
 
 #define HXWTEST 1
 
-#define onlystream
+// #define onlystream
 #define onlybatch
-#define stream_threads
+// #define stream_threads
 
 //#define dg
 
