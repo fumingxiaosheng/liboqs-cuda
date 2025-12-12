@@ -6,7 +6,7 @@
 线程组织结构:
 <<<BATCH_SIZE,192>>>*/
 
-__device__ int32_t zetas_n761[N_N761 / 3] = {
+__device__ int32_t zetas_n761_cuda[N_N761 / 3] = {
     5592919, 33026177, 26790957, 33026177, 13499153, 21938565, 26790957, 33026177, 10764447, 19493511, 9265027, 5611999, 13499153, 21938565, 26790957, 33026177,
     31350138, 24124141, 10149685, 3198144, 32900457, 1140056, 24000204, 27372525, 10764447, 19493511, 9265027, 5611999, 13499153, 21938565, 26790957, 33026177,
     32738467, 16657861, 28138468, 501067, 16015129, 21620241, 1529124, 28870577, 18285219, 3050639, 27906268, 21100145, 5343767, 15280732, 12498775, 17354707,
@@ -40,7 +40,7 @@ __device__ int32_t zetas_n761[N_N761 / 3] = {
     32738467, 16657861, 28138468, 501067, 16015129, 21620241, 1529124, 28870577, 18285219, 3050639, 27906268, 21100145, 5343767, 15280732, 12498775, 17354707,
     31350138, 24124141, 10149685, 3198144, 32900457, 1140056, 24000204, 27372525, 10764447, 19493511, 9265027, 5611999, 13499153, 21938565, 26790957, 33026177};
 
-__device__ int32_t zetas_inv_n761[N_N761 / 3] = {
+__device__ int32_t zetas_inv_n761_cuda[N_N761 / 3] = {
     4936482, 12941874, 13910465, 33199493, 20172936, 14752366, 7168707, 24295961, 29512094, 20006024, 28150129, 23863466, 5790148, 2441259, 26407211, 28022351,
     24560419, 8395453, 12553039, 10228345, 584182, 27332300, 22819644, 12276016, 476468, 24757834, 15631834, 23228604, 7192988, 29800114, 26258901, 31299552,
     26499615, 15301221, 17495707, 8448824, 26202716, 18337996, 12408830, 996257, 7467341, 15476051, 5492562, 30005931, 10673769, 6811853, 9595256, 9331981,
@@ -161,7 +161,7 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     special_CT_b(3,7);
 
     //1 基2
-    zeta = zetas_n761[2];
+    zeta = zetas_n761_cuda[2];
 
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
@@ -176,15 +176,15 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     pse_CT_b(5,7);
 
     //3 基2
-    zeta = zetas_n761[4];
+    zeta = zetas_n761_cuda[4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[5];
+    zeta = zetas_n761_cuda[5];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[6];
+    zeta = zetas_n761_cuda[6];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
@@ -236,7 +236,7 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
 
 
     //4 基2
-    zeta = zetas_n761[8 + group_num];
+    zeta = zetas_n761_cuda[8 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -248,14 +248,14 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     CT_b(3,7,zeta);
 
     //5 基2
-    zeta = zetas_n761[16 + group_num * 2];
+    zeta = zetas_n761_cuda[16 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[16 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[16 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -263,19 +263,19 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     CT_b(5,7,zeta);
 
     //6 基2
-    zeta = zetas_n761[32 + group_num * 4];
+    zeta = zetas_n761_cuda[32 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -322,7 +322,7 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     b[7] = nttb.coeffs[start + group_idx + 3 * 7];
 
     //7 基2
-    zeta = zetas_n761[64 + group_num];
+    zeta = zetas_n761_cuda[64 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -334,14 +334,14 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     CT_b(3,7,zeta);
 
     //8 基2
-    zeta = zetas_n761[128 + group_num * 2];
+    zeta = zetas_n761_cuda[128 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[128 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[128 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -349,19 +349,19 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     CT_b(5,7,zeta);
 
     //9 基2
-    zeta = zetas_n761[256 + group_num * 4];
+    zeta = zetas_n761_cuda[256 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -388,17 +388,17 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     //512 个 basemul
 
     //0-191个
-    zeta = zetas_n761[256 + threadIdx.x / 2];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x, ntta.coeffs + 3 * threadIdx.x,nttb.coeffs + 3 * threadIdx.x,zeta);
 
     //192 - 383
-    zeta = zetas_n761[256 + threadIdx.x / 2 + 96];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 96];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x + 576, ntta.coeffs + 3 * threadIdx.x + 576, nttb.coeffs + 3 * threadIdx.x + 576, zeta);
 
     if(threadIdx.x < 128){
-        zeta = zetas_n761[256 + threadIdx.x / 2 + 192];
+        zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 192];
         if(threadIdx.x & 1) zeta = -zeta;
         basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x + 1152, ntta.coeffs + 3 * threadIdx.x + 1152, nttb.coeffs + 3 * threadIdx.x + 1152, zeta);
     }
@@ -422,29 +422,29 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
 
 
     //1 基2 256
-    zeta = zetas_inv_n761[group_num * 4];
+    zeta = zetas_inv_n761_cuda[group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 3];
     GS_a(6,7,zeta);
 
     //2 基2 128
-    zeta = zetas_inv_n761[256 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[256 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //3 基2 64
-    zeta = zetas_inv_n761[384 + group_num];
+    zeta = zetas_inv_n761_cuda[384 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -475,16 +475,16 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     a[7] = nttc.coeffs[start + group_idx + 24 * 7];
 
     //4 基2 32
-    zeta = zetas_inv_n761[448 + group_num * 4];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 3];
     GS_a(6,7,zeta);
 
 #pragma unroll
@@ -494,16 +494,16 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     }
     
     //5 基2 16
-    zeta = zetas_inv_n761[480 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[480 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //6 基2 8
-    zeta = zetas_inv_n761[496 + group_num];
+    zeta = zetas_inv_n761_cuda[496 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -531,29 +531,29 @@ __global__ void poly_mul_761_batch_q1(poly * array_c,poly * array_a,poly * array
     a[7] = nttc.coeffs[threadIdx.x + 192 * 7];
 
     //7 基2 4
-    zeta = zetas_inv_n761[504];
+    zeta = zetas_inv_n761_cuda[504];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[504 + 1];
+    zeta = zetas_inv_n761_cuda[504 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[504 + 2];
+    zeta = zetas_inv_n761_cuda[504 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[504 + 3];
+    zeta = zetas_inv_n761_cuda[504 + 3];
     GS_a(6,7,zeta);
 
     //8 基2 2
-    zeta = zetas_inv_n761[508];
+    zeta = zetas_inv_n761_cuda[508];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[508 + 1];
+    zeta = zetas_inv_n761_cuda[508 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //9 基2 1
-    zeta = zetas_inv_n761[510];
+    zeta = zetas_inv_n761_cuda[510];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -641,7 +641,7 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     special_CT_b(3,7);
 
     //1 基2
-    zeta = zetas_n761[2];
+    zeta = zetas_n761_cuda[2];
 
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
@@ -656,15 +656,15 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     pse_CT_b(5,7);
 
     //3 基2
-    zeta = zetas_n761[4];
+    zeta = zetas_n761_cuda[4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[5];
+    zeta = zetas_n761_cuda[5];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[6];
+    zeta = zetas_n761_cuda[6];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
@@ -716,7 +716,7 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
 
 
     //4 基2
-    zeta = zetas_n761[8 + group_num];
+    zeta = zetas_n761_cuda[8 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -728,14 +728,14 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     CT_b(3,7,zeta);
 
     //5 基2
-    zeta = zetas_n761[16 + group_num * 2];
+    zeta = zetas_n761_cuda[16 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[16 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[16 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -743,19 +743,19 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     CT_b(5,7,zeta);
 
     //6 基2
-    zeta = zetas_n761[32 + group_num * 4];
+    zeta = zetas_n761_cuda[32 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -802,7 +802,7 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     b[7] = nttb.coeffs[start + group_idx + 3 * 7];
 
     //7 基2
-    zeta = zetas_n761[64 + group_num];
+    zeta = zetas_n761_cuda[64 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -814,14 +814,14 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     CT_b(3,7,zeta);
 
     //8 基2
-    zeta = zetas_n761[128 + group_num * 2];
+    zeta = zetas_n761_cuda[128 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[128 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[128 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -829,19 +829,19 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     CT_b(5,7,zeta);
 
     //9 基2
-    zeta = zetas_n761[256 + group_num * 4];
+    zeta = zetas_n761_cuda[256 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -882,17 +882,17 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     //512 个 basemul
 
     //0-191个
-    zeta = zetas_n761[256 + threadIdx.x / 2];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x, ntta.coeffs + 3 * threadIdx.x,nttb.coeffs + 3 * threadIdx.x,zeta);
 
     //192 - 383
-    zeta = zetas_n761[256 + threadIdx.x / 2 + 96];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 96];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x + 576, ntta.coeffs + 3 * threadIdx.x + 576, nttb.coeffs + 3 * threadIdx.x + 576, zeta);
 
     if(threadIdx.x < 128){
-        zeta = zetas_n761[256 + threadIdx.x / 2 + 192];
+        zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 192];
         if(threadIdx.x & 1) zeta = -zeta;
         basemul_n761_cuda(nttc.coeffs + 3 * threadIdx.x + 1152, ntta.coeffs + 3 * threadIdx.x + 1152, nttb.coeffs + 3 * threadIdx.x + 1152, zeta);
     }
@@ -916,29 +916,29 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
 
 
     //1 基2 256
-    zeta = zetas_inv_n761[group_num * 4];
+    zeta = zetas_inv_n761_cuda[group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 3];
     GS_a(6,7,zeta);
 
     //2 基2 128
-    zeta = zetas_inv_n761[256 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[256 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //3 基2 64
-    zeta = zetas_inv_n761[384 + group_num];
+    zeta = zetas_inv_n761_cuda[384 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -969,16 +969,16 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     a[7] = nttc.coeffs[start + group_idx + 24 * 7];
 
     //4 基2 32
-    zeta = zetas_inv_n761[448 + group_num * 4];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 3];
     GS_a(6,7,zeta);
 
 #pragma unroll
@@ -988,16 +988,16 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     }
     
     //5 基2 16
-    zeta = zetas_inv_n761[480 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[480 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //6 基2 8
-    zeta = zetas_inv_n761[496 + group_num];
+    zeta = zetas_inv_n761_cuda[496 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -1025,29 +1025,29 @@ __global__ void poly_mul_761_batch_q2(poly * array_c,poly * array_a,poly * array
     a[7] = nttc.coeffs[threadIdx.x + 192 * 7];
 
     //7 基2 4
-    zeta = zetas_inv_n761[504];
+    zeta = zetas_inv_n761_cuda[504];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[504 + 1];
+    zeta = zetas_inv_n761_cuda[504 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[504 + 2];
+    zeta = zetas_inv_n761_cuda[504 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[504 + 3];
+    zeta = zetas_inv_n761_cuda[504 + 3];
     GS_a(6,7,zeta);
 
     //8 基2 2
-    zeta = zetas_inv_n761[508];
+    zeta = zetas_inv_n761_cuda[508];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[508 + 1];
+    zeta = zetas_inv_n761_cuda[508 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //9 基2 1
-    zeta = zetas_inv_n761[510];
+    zeta = zetas_inv_n761_cuda[510];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -1126,7 +1126,7 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     special_CT_b(3,7);
 
     //1 基2
-    zeta = zetas_n761[2];
+    zeta = zetas_n761_cuda[2];
 
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
@@ -1141,15 +1141,15 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     pse_CT_b(5,7);
 
     //3 基2
-    zeta = zetas_n761[4];
+    zeta = zetas_n761_cuda[4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[5];
+    zeta = zetas_n761_cuda[5];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[6];
+    zeta = zetas_n761_cuda[6];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
@@ -1201,7 +1201,7 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
 
 
     //4 基2
-    zeta = zetas_n761[8 + group_num];
+    zeta = zetas_n761_cuda[8 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -1213,14 +1213,14 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     CT_b(3,7,zeta);
 
     //5 基2
-    zeta = zetas_n761[16 + group_num * 2];
+    zeta = zetas_n761_cuda[16 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[16 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[16 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -1228,19 +1228,19 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     CT_b(5,7,zeta);
 
     //6 基2
-    zeta = zetas_n761[32 + group_num * 4];
+    zeta = zetas_n761_cuda[32 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[32 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[32 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -1287,7 +1287,7 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     b[7] = nttb.coeffs[start + group_idx + 3 * 7];
 
     //7 基2
-    zeta = zetas_n761[64 + group_num];
+    zeta = zetas_n761_cuda[64 + group_num];
     CT_a(0,4,zeta);
     CT_a(1,5,zeta);
     CT_a(2,6,zeta);
@@ -1299,14 +1299,14 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     CT_b(3,7,zeta);
 
     //8 基2
-    zeta = zetas_n761[128 + group_num * 2];
+    zeta = zetas_n761_cuda[128 + group_num * 2];
     CT_a(0,2,zeta);
     CT_a(1,3,zeta);
 
     CT_b(0,2,zeta);
     CT_b(1,3,zeta);
 
-    zeta = zetas_n761[128 + group_num * 2 + 1];
+    zeta = zetas_n761_cuda[128 + group_num * 2 + 1];
     CT_a(4,6,zeta);
     CT_a(5,7,zeta);
 
@@ -1314,19 +1314,19 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     CT_b(5,7,zeta);
 
     //9 基2
-    zeta = zetas_n761[256 + group_num * 4];
+    zeta = zetas_n761_cuda[256 + group_num * 4];
     CT_a(0,1,zeta);
     CT_b(0,1,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 1];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 1];
     CT_a(2,3,zeta);
     CT_b(2,3,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 2];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 2];
     CT_a(4,5,zeta);
     CT_b(4,5,zeta);
 
-    zeta = zetas_n761[256 + group_num * 4 + 3];
+    zeta = zetas_n761_cuda[256 + group_num * 4 + 3];
     CT_a(6,7,zeta);
     CT_b(6,7,zeta);
 
@@ -1353,17 +1353,17 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     //512 个 basemul
 
     //0-191个
-    zeta = zetas_n761[256 + threadIdx.x / 2];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(ntta.coeffs + 3 * threadIdx.x, ntta.coeffs + 3 * threadIdx.x,nttb.coeffs + 3 * threadIdx.x,zeta);
 
     //192 - 383
-    zeta = zetas_n761[256 + threadIdx.x / 2 + 96];
+    zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 96];
     if(threadIdx.x & 1) zeta = -zeta;
     basemul_n761_cuda(ntta.coeffs + 3 * threadIdx.x + 576, ntta.coeffs + 3 * threadIdx.x + 576, nttb.coeffs + 3 * threadIdx.x + 576, zeta);
 
     if(threadIdx.x < 128){
-        zeta = zetas_n761[256 + threadIdx.x / 2 + 192];
+        zeta = zetas_n761_cuda[256 + threadIdx.x / 2 + 192];
         if(threadIdx.x & 1) zeta = -zeta;
         basemul_n761_cuda(ntta.coeffs + 3 * threadIdx.x + 1152, ntta.coeffs + 3 * threadIdx.x + 1152, nttb.coeffs + 3 * threadIdx.x + 1152, zeta);
     }
@@ -1387,29 +1387,29 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
 
 
     //1 基2 256
-    zeta = zetas_inv_n761[group_num * 4];
+    zeta = zetas_inv_n761_cuda[group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[group_num * 4 + 3];
     GS_a(6,7,zeta);
 
     //2 基2 128
-    zeta = zetas_inv_n761[256 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[256 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[256 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //3 基2 64
-    zeta = zetas_inv_n761[384 + group_num];
+    zeta = zetas_inv_n761_cuda[384 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -1440,16 +1440,16 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     a[7] = ntta.coeffs[start + group_idx + 24 * 7];
 
     //4 基2 32
-    zeta = zetas_inv_n761[448 + group_num * 4];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 1];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 2];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[448 + group_num * 4 + 3];
+    zeta = zetas_inv_n761_cuda[448 + group_num * 4 + 3];
     GS_a(6,7,zeta);
 
 #pragma unroll
@@ -1459,16 +1459,16 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     }
     
     //5 基2 16
-    zeta = zetas_inv_n761[480 + group_num * 2];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[480 + group_num * 2 + 1];
+    zeta = zetas_inv_n761_cuda[480 + group_num * 2 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //6 基2 8
-    zeta = zetas_inv_n761[496 + group_num];
+    zeta = zetas_inv_n761_cuda[496 + group_num];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
@@ -1496,29 +1496,29 @@ __device__  void d_poly_mul_q1_761(nttpoly_n761 & ntta, nttpoly_n761 & nttb, pol
     a[7] = ntta.coeffs[threadIdx.x + 192 * 7];
 
     //7 基2 4
-    zeta = zetas_inv_n761[504];
+    zeta = zetas_inv_n761_cuda[504];
     GS_a(0,1,zeta);
 
-    zeta = zetas_inv_n761[504 + 1];
+    zeta = zetas_inv_n761_cuda[504 + 1];
     GS_a(2,3,zeta);
 
-    zeta = zetas_inv_n761[504 + 2];
+    zeta = zetas_inv_n761_cuda[504 + 2];
     GS_a(4,5,zeta);
 
-    zeta = zetas_inv_n761[504 + 3];
+    zeta = zetas_inv_n761_cuda[504 + 3];
     GS_a(6,7,zeta);
 
     //8 基2 2
-    zeta = zetas_inv_n761[508];
+    zeta = zetas_inv_n761_cuda[508];
     GS_a(0,2,zeta);
     GS_a(1,3,zeta);
 
-    zeta = zetas_inv_n761[508 + 1];
+    zeta = zetas_inv_n761_cuda[508 + 1];
     GS_a(4,6,zeta);
     GS_a(5,7,zeta);
 
     //9 基2 1
-    zeta = zetas_inv_n761[510];
+    zeta = zetas_inv_n761_cuda[510];
     GS_a(0,4,zeta);
     GS_a(1,5,zeta);
     GS_a(2,6,zeta);
