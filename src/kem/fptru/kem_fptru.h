@@ -11,6 +11,7 @@
 #define OQS_KEM_fptru_761_length_ciphertext 952
 #define OQS_KEM_fptru_761_length_shared_secret 32
 #define OQS_KEM_fptru_761_length_keypair_seed 32
+#define hxw_use_batch 1
 OQS_KEM *OQS_KEM_fptru_761_new(void);
 OQS_API OQS_STATUS OQS_KEM_fptru_761_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_fptru_761_keypair_derand(uint8_t *public_key, uint8_t *secret_key, const uint8_t *seed);

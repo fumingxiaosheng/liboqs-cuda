@@ -131,6 +131,8 @@
 #cmakedefine OQS_ENABLE_KEM_FPTRU 1
 #cmakedefine OQS_ENABLE_KEM_fptru_761 1
 #cmakedefine OQS_ENABLE_KEM_fptru_761_cuda 1
+#cmakedefine OQS_ENABLE_KEM_fptru_761_ref_batch 1 
+#cmakedefine OQS_ENABLE_KEM_fptru_761_ref 1
 
 #cmakedefine OQS_ENABLE_KEM_ML_KEM 1
 #cmakedefine OQS_ENABLE_KEM_ml_kem_512 1

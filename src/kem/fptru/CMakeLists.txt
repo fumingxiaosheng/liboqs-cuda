@@ -10,9 +10,27 @@ if(OQS_ENABLE_KEM_fptru_761)
     target_include_directories(fptru_761 PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_CURRENT_SOURCE_DIR}/FPTRU
+        ${CMAKE_CURRENT_SOURCE_DIR}/FPTRU_c_batch_ref
+        ${CMAKE_CURRENT_SOURCE_DIR}/FPTRU_ref
     )
     
     set(_FPTRU_OBJS ${_FPTRU_OBJS} $<TARGET_OBJECTS:fptru_761>)
+endif()
+
+if(OQS_ENABLE_KEM_fptru_761_ref_batch)
+    add_library(fptru_761_ref_batch OBJECT kem_fptru_761.c FPTRU_c_batch_ref/poly_mul_n761q/radix_ntt_n761.c FPTRU_c_batch_ref/cbd.c FPTRU_c_batch_ref/coding.c FPTRU_c_batch_ref/cpucycles.c FPTRU_c_batch_ref/fips202.c FPTRU_c_batch_ref/inverse.c FPTRU_c_batch_ref/kem.c FPTRU_c_batch_ref/pack.c FPTRU_c_batch_ref/pke.c FPTRU_c_batch_ref/poly.c FPTRU_c_batch_ref/randombytes.c FPTRU_c_batch_ref/reduce.c FPTRU_c_batch_ref/speed.c FPTRU_c_batch_ref/batchkeygen.c) #这里不能够有斜杠
+    target_compile_options(fptru_761_ref_batch PUBLIC -DFPTRU_N=761)
+    target_include_directories(fptru_761_ref_batch PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/FPTRU_c_batch_ref/)
+    target_include_directories(fptru_761_ref_batch PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/FPTRU_c_batch_ref/poly_mul_n761q)
+    set(_FPTRU_OBJS ${_FPTRU_OBJS} $<TARGET_OBJECTS:fptru_761_ref_batch>)
+endif()
+
+if(OQS_ENABLE_KEM_fptru_761_ref)
+    add_library(fptru_761_ref OBJECT kem_fptru_761.c FPTRU_ref/poly_mul_n761q/radix_ntt_n761.c FPTRU_ref/cbd.c FPTRU_ref/coding.c FPTRU_ref/cpucycles.c FPTRU_ref/fips202.c FPTRU_ref/inverse.c FPTRU_ref/kem.c FPTRU_ref/pack.c FPTRU_ref/pke.c FPTRU_ref/poly.c FPTRU_ref/randombytes.c FPTRU_ref/reduce.c FPTRU_ref/speed.c) #这里不能够有斜杠
+    target_compile_options(fptru_761_ref PUBLIC -DFPTRU_N=761)
+    target_include_directories(fptru_761_ref PRIVATE ${CMAKE_CURRENT_LIST_DIR}/FPTRU_ref)
+    target_include_directories(fptru_761_ref PRIVATE ${CMAKE_CURRENT_LIST_DIR}/FPTRU_ref/poly_mul_n761q)
+    set(_FPTRU_OBJS ${_FPTRU_OBJS} $<TARGET_OBJECTS:fptru_761_ref>)
 endif()
 
 if(OQS_ENABLE_KEM_fptru_761_cuda)

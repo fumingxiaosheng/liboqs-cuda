@@ -97,7 +97,7 @@ cmake_dependent_option(OQS_ENABLE_KEM_frodokem_976_shake "" ON "OQS_ENABLE_KEM_F
 cmake_dependent_option(OQS_ENABLE_KEM_frodokem_1344_aes "" ON "OQS_ENABLE_KEM_FRODOKEM" OFF)
 cmake_dependent_option(OQS_ENABLE_KEM_frodokem_1344_shake "" ON "OQS_ENABLE_KEM_FRODOKEM" OFF)
 
-option(OQS_ENABLE_KEM_NTRUPRIME "Enable ntruprime algorithm family" OFF)
+option(OQS_ENABLE_KEM_NTRUPRIME "Enable ntruprime algorithm family" ON)
 cmake_dependent_option(OQS_ENABLE_KEM_ntruprime_sntrup761 "" ON "OQS_ENABLE_KEM_NTRUPRIME" OFF)
 if(CMAKE_SYSTEM_NAME MATCHES "Linux|Darwin")
 if(OQS_DIST_X86_64_BUILD OR (OQS_USE_AVX2_INSTRUCTIONS))
@@ -416,6 +416,8 @@ if(OQS_USE_CUPQC)
     cmake_dependent_option(OQS_ENABLE_KEM_fptru_761_cuda "" ON "OQS_ENABLE_KEM_fptru_761" OFF)
 endif()
 endif()
+cmake_dependent_option(OQS_ENABLE_KEM_fptru_761_ref_batch "" ON "OQS_ENABLE_KEM_fptru_761" OFF)
+cmake_dependent_option(OQS_ENABLE_KEM_fptru_761_ref "" ON "OQS_ENABLE_KEM_fptru_761" OFF)
 
 if(CMAKE_SYSTEM_NAME MATCHES "Darwin|Linux")
 if(OQS_DIST_X86_64_BUILD OR (OQS_USE_AVX2_INSTRUCTIONS AND OQS_USE_POPCNT_INSTRUCTIONS))

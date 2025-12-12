@@ -3043,14 +3043,14 @@ double fptru_keygen_with_batchsize(unsigned char *array_pk,unsigned char *array_
     HANDLE_ERROR(cudaStreamDestroy(stream0));
 #endif
 
-#ifdef use_stream
+#ifdef use_stream_keygen
     std::vector<cudaStream_t> streams(NUM_THREAD);
     for (auto &stream: streams) {
         HANDLE_ERROR(cudaStreamCreate(&stream));
     }
-    int batch_size = batch_size/NUM_THREAD;
+    batch_size = batch_size/NUM_THREAD;
 
-#ifdef onlystream
+#ifdef onlystream_keygen
     ChronoTimer timer_keypair_stream("keygen stream");
     for(int i=0;i<HXWTEST;i++){
         timer_keypair_stream.start();
@@ -3067,7 +3067,7 @@ double fptru_keygen_with_batchsize(unsigned char *array_pk,unsigned char *array_
     }
 #endif
 
-#ifdef stream_threads
+#ifdef stream_threads_keygen
     ChronoTimer timer_keypair_stream_threads("keygen stream threads");
     std::thread threads[NUM_THREAD];
     std::vector<KeygenArgs> keygen_args(NUM_THREAD);

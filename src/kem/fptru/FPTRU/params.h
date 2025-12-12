@@ -14,11 +14,14 @@
 #endif
 
 #ifndef NUM_THREAD
-#define NUM_THREAD 1
+#define NUM_THREAD 4
 #endif
 
 #define HXWTEST 1
 
+// #define use_stream_keygen 1
+// #define onlystream_keygen 1
+// #define stream_threads_keygen 1
 // #define onlystream
 #define onlybatch
 // #define stream_threads
