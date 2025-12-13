@@ -33,13 +33,11 @@ OQS_KEM *OQS_KEM_fptru_761_new(void) {
 	return kem;
 }
 
-#if defined(OQS_USE_CUPQC)
 #if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 extern int cupqc_fptru_761_keypair(uint8_t *pk, uint8_t *sk);
 extern int cupqc_fptru_761_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 extern int cupqc_fptru_761_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
 #endif
-#endif /* OQS_USE_CUPQC */
 
 #if defined(OQS_ENABLE_KEM_fptru_761_ref_batch)
 #include "FPTRU_c_batch_ref/batchkeygen.h"
@@ -58,13 +56,13 @@ extern int crypto_kem_decaps(unsigned char *k,const unsigned char *ct,const unsi
 #endif
 
 OQS_API OQS_STATUS OQS_KEM_fptru_761_keypair_derand(uint8_t *public_key, uint8_t *secret_key, const uint8_t *seed) {
-#if defined(OQS_USE_CUPQC) && defined(OQS_ENABLE_KEM_fptru_761_cuda)
+#if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 #ifdef hxw_use_batch
 	return (OQS_STATUS) cupqc_fptru_761_keypair_batch(public_key, secret_key);
 #else
 	return (OQS_STATUS) cupqc_fptru_761_keypair(public_key, secret_key);
 #endif
-#endif /* OQS_USE_CUPQC && OQS_ENABLE_KEM_fptru_761_cuda */
+#endif /* OQS_ENABLE_KEM_fptru_761_cuda */
 	// 默认使用参考实现
 
 #if defined(OQS_ENABLE_KEM_fptru_761_ref_batch)
@@ -91,13 +89,13 @@ OQS_API OQS_STATUS OQS_KEM_fptru_761_keypair_derand(uint8_t *public_key, uint8_t
 }
 
 OQS_API OQS_STATUS OQS_KEM_fptru_761_keypair(uint8_t *public_key, uint8_t *secret_key) {
-#if defined(OQS_USE_CUPQC) && defined(OQS_ENABLE_KEM_fptru_761_cuda)
+#if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 #ifdef hxw_use_batch
 	return (OQS_STATUS) cupqc_fptru_761_keypair_batch(public_key, secret_key);
 #else
 	return (OQS_STATUS) cupqc_fptru_761_keypair(public_key, secret_key);
 #endif
-#endif /* OQS_USE_CUPQC && OQS_ENABLE_KEM_fptru_761_cuda */
+#endif /* OQS_ENABLE_KEM_fptru_761_cuda */
 	// 默认使用参考实现
 #if defined(OQS_ENABLE_KEM_fptru_761_ref_batch)
 	int current_available = atomic_load(&avaliable_num);
@@ -127,9 +125,9 @@ OQS_API OQS_STATUS OQS_KEM_fptru_761_encaps(uint8_t *ciphertext, uint8_t *shared
 	return (OQS_STATUS) crypto_kem_encaps(ciphertext,shared_secret,public_key);
 #endif
 
-#if defined(OQS_USE_CUPQC) && defined(OQS_ENABLE_KEM_fptru_761_cuda)
+#if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 	return (OQS_STATUS) cupqc_fptru_761_enc(ciphertext, shared_secret, public_key);
-#endif /* OQS_USE_CUPQC && OQS_ENABLE_KEM_fptru_761_cuda */
+#endif /* OQS_ENABLE_KEM_fptru_761_cuda */
 
 
 	// 默认使用参考实现
@@ -141,9 +139,9 @@ OQS_API OQS_STATUS OQS_KEM_fptru_761_decaps(uint8_t *shared_secret, const uint8_
 	return (OQS_STATUS) crypto_kem_decaps(shared_secret ,ciphertext ,secret_key);
 #endif
 
-#if defined(OQS_USE_CUPQC) && defined(OQS_ENABLE_KEM_fptru_761_cuda)
+#if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 	return (OQS_STATUS) cupqc_fptru_761_dec(shared_secret, ciphertext, secret_key);
-#endif /* OQS_USE_CUPQC && OQS_ENABLE_KEM_fptru_761_cuda */
+#endif /* OQS_ENABLE_KEM_fptru_761_cuda */
 	// 默认使用参考实现
 
 	return OQS_ERROR;
