@@ -1,0 +1,63 @@
+Determining if the explicit_memset exist failed with the following output:
+Change Dir: /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_77f54/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_77f54.dir/build.make CMakeFiles/cmTC_77f54.dir/build
+gmake[1]: 进入目录“/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp”
+Building C object CMakeFiles/cmTC_77f54.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIE -std=gnu11 -o CMakeFiles/cmTC_77f54.dir/CheckSymbolExists.c.o -c /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘explicit_memset’ undeclared (first use in this function)
+    8 |   return ((int*)(&explicit_memset))[argc];
+      |                   ^~~~~~~~~~~~~~~
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_77f54.dir/build.make:78：CMakeFiles/cmTC_77f54.dir/CheckSymbolExists.c.o] 错误 1
+gmake[1]: 离开目录“/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp”
+gmake: *** [Makefile:127：cmTC_77f54/fast] 错误 2
+
+
+File /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef explicit_memset
+  return ((int*)(&explicit_memset))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the memset_s exist failed with the following output:
+Change Dir: /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_daeeb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_daeeb.dir/build.make CMakeFiles/cmTC_daeeb.dir/build
+gmake[1]: 进入目录“/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp”
+Building C object CMakeFiles/cmTC_daeeb.dir/CheckSymbolExists.c.o
+/usr/bin/cc   -fPIE -std=gnu11 -o CMakeFiles/cmTC_daeeb.dir/CheckSymbolExists.c.o -c /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘memset_s’ undeclared (first use in this function); did you mean ‘memset’?
+    8 |   return ((int*)(&memset_s))[argc];
+      |                   ^~~~~~~~
+      |                   memset
+/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_daeeb.dir/build.make:78：CMakeFiles/cmTC_daeeb.dir/CheckSymbolExists.c.o] 错误 1
+gmake[1]: 离开目录“/home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp”
+gmake: *** [Makefile:127：cmTC_daeeb/fast] 错误 2
+
+
+File /home/hxw/oqs-provider-hxw/liboqs-cuda/_build/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <string.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef memset_s
+  return ((int*)(&memset_s))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}

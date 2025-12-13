@@ -1,0 +1,1 @@
+/usr/bin/cc -Wl,-z,noexecstack CMakeFiles/test_aes.dir/test_aes.c.o -o test_aes  ../lib/liboqs.a ../lib/liboqs-internal.a -lm /usr/lib/x86_64-linux-gnu/libcrypto.so /usr/lib/x86_64-linux-gnu/libcrypto.so 

@@ -35,6 +35,7 @@ OQS_KEM *OQS_KEM_fptru_761_new(void) {
 
 #if defined(OQS_ENABLE_KEM_fptru_761_cuda)
 extern int cupqc_fptru_761_keypair(uint8_t *pk, uint8_t *sk);
+extern int cupqc_fptru_761_keypair_batch(uint8_t *pk, uint8_t *sk);
 extern int cupqc_fptru_761_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
 extern int cupqc_fptru_761_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
 #endif

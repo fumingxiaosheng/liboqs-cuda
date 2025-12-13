@@ -145,7 +145,124 @@ void unpack_pk(poly *r, const unsigned char *a)
         r->coeffs[i] = ((int16_t)R[i]);
 }
 #endif
+#if (USING_PK_ENCODE == 0)
+#if(FPTRU_N == 761)
+void pack_pk(unsigned char *r, const poly *a)
+{
+    unsigned int i = 0 ;
+    for (i = 0; i < FPTRU_N/8; i ++) //95
+    {
+        r[i *13] = a->coeffs[i*8];
+        r[i *13+ 1] = (a->coeffs[i*8] >> 8)| ((int16_t)a->coeffs[i*8+1] << 5);
+        r[i *13+ 2] = a->coeffs[i*8+1] >> 3;
+        r[i *13+ 3] = (a->coeffs[i*8+1] >> 11 )| ((int16_t)a->coeffs[i*8+2] << 2);
+        r[i *13+ 4] = (a->coeffs[i*8+2] >> 6  )| ((int16_t)a->coeffs[i*8+3] << 7);
+        r[i *13+ 5] = a->coeffs[i*8+3] >> 1;
+        r[i *13+ 6] = (a->coeffs[i*8+3] >> 9  )| ((int16_t)a->coeffs[i*8+4] << 4);
+        r[i *13+ 7] = a->coeffs[i*8+4] >> 4;
+        r[i *13+ 8] = (a->coeffs[i*8+4] >> 12 )| ((int16_t)a->coeffs[i*8+5] << 1);
+        r[i *13+ 9] = (a->coeffs[i*8+5] >> 7  )| ((int16_t)a->coeffs[i*8+6] << 6);
+        r[i *13+ 10] = a->coeffs[i*8+6] >> 2;
+        r[i *13+ 11] = (a->coeffs[i*8+6] >> 10) | ((int16_t)a->coeffs[i*8+7] << 3);
+        r[i *13+ 12] = a->coeffs[i*8+7] >> 5;
+    }
+    r[i*13] = a->coeffs[i*8];
+    r[i*13+ 1] = (a->coeffs[i*8] >> 8) & 0x1F;
+}
 
+
+void unpack_pk(poly *r, const unsigned char *a) {
+
+    unsigned int i = 0;
+    for (i = 0; i < FPTRU_N/8; i++) {
+        r->coeffs[i*8] = a[i*13] | (uint16_t)a[i*13 + 1] << 8;
+        r->coeffs[i*8] &= 0x1FFF;
+        r->coeffs[i*8+1] = (a[i*13 + 1] >> 5) | (uint16_t)(a[i*13 + 2]  << 3) | (uint16_t)(a[i*13 + 3]  << 11) ;
+        r->coeffs[i*8+1] &= 0x1FFF;
+        r->coeffs[i*8+2] = (a[i*13 + 3] >> 2) | (uint16_t)(a[i*13 + 4]  << 6);
+        r->coeffs[i*8+2] &= 0x1FFF;
+        r->coeffs[i*8+3] = (a[i*13 + 4] >> 7) | (uint16_t)(a[i*13 + 5]  << 1)| (uint16_t)(a[i*13 + 6]   << 9);
+        r->coeffs[i*8+3] &= 0x1FFF;
+        r->coeffs[i*8+4] = (a[i*13 + 6] >> 4) | (uint16_t)(a[i*13 + 7]  << 4) | (uint16_t)(a[i*13 + 8]  << 12);
+        r->coeffs[i*8+4] &= 0x1FFF;
+        r->coeffs[i*8+5] = (a[i*13 + 8] >> 1) | (uint16_t)(a[i*13 + 9]  << 7) ;
+        r->coeffs[i*8+5] &= 0x1FFF;
+        r->coeffs[i*8+6] = (a[i*13 + 9] >> 6) | (uint16_t)(a[i*13 + 10] << 2) | (uint16_t)(a[i*13 + 11] << 10);
+        r->coeffs[i*8+6] &= 0x1FFF;
+        r->coeffs[i*8+7] = (a[i*13 + 11] >> 3) | (uint16_t)(a[i*13 + 12] << 5) ;
+        r->coeffs[i*8+7] &= 0x1FFF;
+    }
+    r->coeffs[i*8] = a[i*13] | (uint16_t)a[i*13 + 1] << 8;
+    r->coeffs[i*8] &= 0x1FFF;
+}
+
+#endif
+
+#if(FPTRU_N == 653 || FPTRU_N == 1277)
+void pack_pk(unsigned char *r, const poly *a)
+{
+    unsigned int i = 0 ;
+    for (i = 0; i < FPTRU_N/8; i ++)
+    {
+        r[i *13] = a->coeffs[i*8];
+        r[i *13+ 1] = (a->coeffs[i*8] >> 8)| ((int16_t)a->coeffs[i*8+1] << 5);
+        r[i *13+ 2] = a->coeffs[i*8+1] >> 3;
+        r[i *13+ 3] = (a->coeffs[i*8+1] >> 11 )| ((int16_t)a->coeffs[i*8+2] << 2);
+        r[i *13+ 4] = (a->coeffs[i*8+2] >> 6  )| ((int16_t)a->coeffs[i*8+3] << 7);
+        r[i *13+ 5] = a->coeffs[i*8+3] >> 1;
+        r[i *13+ 6] = (a->coeffs[i*8+3] >> 9  )| ((int16_t)a->coeffs[i*8+4] << 4);
+        r[i *13+ 7] = a->coeffs[i*8+4] >> 4;
+        r[i *13+ 8] = (a->coeffs[i*8+4] >> 12 )| ((int16_t)a->coeffs[i*8+5] << 1);
+        r[i *13+ 9] = (a->coeffs[i*8+5] >> 7  )| ((int16_t)a->coeffs[i*8+6] << 6);
+        r[i *13+ 10] = a->coeffs[i*8+6] >> 2;
+        r[i *13+ 11] = (a->coeffs[i*8+6] >> 10) | ((int16_t)a->coeffs[i*8+7] << 3);
+        r[i *13+ 12] = a->coeffs[i*8+7] >> 5;
+    }
+    r[i *13] = a->coeffs[i*8];
+    r[i *13+ 1] = (a->coeffs[i*8] >> 8)| ((int16_t)a->coeffs[i*8+1] << 5);
+    r[i *13+ 2] = a->coeffs[i*8+1] >> 3;
+    r[i *13+ 3] = (a->coeffs[i*8+1] >> 11 )| ((int16_t)a->coeffs[i*8+2] << 2);
+    r[i *13+ 4] = (a->coeffs[i*8+2] >> 6  )| ((int16_t)a->coeffs[i*8+3] << 7);
+    r[i *13+ 5] = a->coeffs[i*8+3] >> 1;
+    r[i *13+ 6] = (a->coeffs[i*8+3] >> 9  )| ((int16_t)a->coeffs[i*8+4] << 4);
+    r[i *13+ 7] = a->coeffs[i*8+4] >> 4;
+    r[i *13+ 8] = (a->coeffs[i*8+4] >> 12 ) & 0x01;
+}
+
+void unpack_pk(poly *r, const unsigned char *a) {
+    unsigned int i = 0;
+    for (i = 0; i < FPTRU_N/8; i++) {
+        r->coeffs[i*8] = a[i*13] | (uint16_t)a[i*13 + 1] << 8;
+        r->coeffs[i*8] &= 0x1FFF;
+        r->coeffs[i*8+1] = (a[i*13 + 1] >> 5) | (uint16_t)(a[i*13 + 2]  << 3) | (uint16_t)(a[i*13 + 3]  << 11) ;
+        r->coeffs[i*8+1] &= 0x1FFF;
+        r->coeffs[i*8+2] = (a[i*13 + 3] >> 2) | (uint16_t)(a[i*13 + 4]  << 6);
+        r->coeffs[i*8+2] &= 0x1FFF;
+        r->coeffs[i*8+3] = (a[i*13 + 4] >> 7) | (uint16_t)(a[i*13 + 5]  << 1)| (uint16_t)(a[i*13 + 6]   << 9);
+        r->coeffs[i*8+3] &= 0x1FFF;
+        r->coeffs[i*8+4] = (a[i*13 + 6] >> 4) | (uint16_t)(a[i*13 + 7]  << 4) | (uint16_t)(a[i*13 + 8]  << 12);
+        r->coeffs[i*8+4] &= 0x1FFF;
+        r->coeffs[i*8+5] = (a[i*13 + 8] >> 1) | (uint16_t)(a[i*13 + 9]  << 7) ;
+        r->coeffs[i*8+5] &= 0x1FFF;
+        r->coeffs[i*8+6] = (a[i*13 + 9] >> 6) | (uint16_t)(a[i*13 + 10] << 2) | (uint16_t)(a[i*13 + 11] << 10);
+        r->coeffs[i*8+6] &= 0x1FFF;
+        r->coeffs[i*8+7] = (a[i*13 + 11] >> 3) | (uint16_t)(a[i*13 + 12] << 5) ;
+        r->coeffs[i*8+7] &= 0x1FFF;
+    }
+    r->coeffs[i*8] = a[i*13] | (uint16_t)a[i*13 + 1] << 8;
+    r->coeffs[i*8] &= 0x1FFF;
+    r->coeffs[i*8+1] = (a[i*13 + 1] >> 5) | (uint16_t)(a[i*13 + 2]  << 3) | (uint16_t)(a[i*13 + 3]  << 11) ;
+    r->coeffs[i*8+1] &= 0x1FFF;
+    r->coeffs[i*8+2] = (a[i*13 + 3] >> 2) | (uint16_t)(a[i*13 + 4]  << 6);
+    r->coeffs[i*8+2] &= 0x1FFF;
+    r->coeffs[i*8+3] = (a[i*13 + 4] >> 7) | (uint16_t)(a[i*13 + 5]  << 1)| (uint16_t)(a[i*13 + 6]   << 9);
+    r->coeffs[i*8+3] &= 0x1FFF;
+    r->coeffs[i*8+4] = (a[i*13 + 6] >> 4) | (uint16_t)(a[i*13 + 7]  << 4) | (uint16_t)(a[i*13 + 8]  << 12);
+    r->coeffs[i*8+4] &= 0x1FFF;
+}
+#endif
+
+#endif
 void pack_sk(unsigned char *r, const poly *a)
 {
     unsigned int i;
@@ -261,7 +378,7 @@ void pack_ct(unsigned char *r, const poly *a)
 {
     unsigned int i;
 #if (FPTRU_Q2 == 1024)
-    for (i = 0; i < FPTRU_N / 4; ++i)
+    for (i = 0; i < FPTRU_N / 4; ++i) //0 -189 0 - 318
     {
         r[5 * i + 0] = (a->coeffs[4 * i + 0] >> 0);
         r[5 * i + 1] = (a->coeffs[4 * i + 0] >> 8) | ((int16_t)a->coeffs[4 * i + 1] << 2);
@@ -269,7 +386,7 @@ void pack_ct(unsigned char *r, const poly *a)
         r[5 * i + 3] = (a->coeffs[4 * i + 2] >> 4) | ((int16_t)a->coeffs[4 * i + 3] << 6);
         r[5 * i + 4] = (a->coeffs[4 * i + 3] >> 2);
     }
-    r[5 * i + 0] = (a->coeffs[4 * i + 0] >> 0);
+    r[5 * i + 0] = (a->coeffs[4 * i + 0] >> 0); //190 //319
     r[5 * i + 1] = (a->coeffs[4 * i + 0] >> 8) & 0x3;
 #elif (FPTRU_Q2 == 2048)
     for (i = 0; i < FPTRU_N / 8; ++i)
